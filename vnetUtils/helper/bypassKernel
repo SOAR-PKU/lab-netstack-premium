@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+./vdo iptables -t filter -I FORWARD -j DROP
+./vdo iptables -t filter -I INPUT -j DROP
+./vdo iptables -t filter -I OUTPUT -j DROP

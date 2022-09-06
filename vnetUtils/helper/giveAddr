@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+./vdo ip addr add $2 dev $1
+./vdo ip link set $1 up

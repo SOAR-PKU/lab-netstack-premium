@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+./vdo ip link add $1 type veth peer name $2

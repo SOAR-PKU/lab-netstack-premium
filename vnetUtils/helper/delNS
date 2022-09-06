@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+if [[ "s${1: -3:3}" != "sns0" ]]; 
+then
+    ./vdo ip netns del $1
+fi

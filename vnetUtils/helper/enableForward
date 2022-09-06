@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+./vdo sysctl -q net.ipv4.ip_forward=1
+./vdo sysctl -q net.ipv4.conf.all.forwarding=1

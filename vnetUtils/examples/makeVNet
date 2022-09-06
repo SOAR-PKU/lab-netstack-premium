@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# split [split] [line] [name1] ...
+split()
+{
+    splitline="$2"
+    for (( spliti = 3; spliti <= $#; spliti++ ));
+    do
+        eval eval \$$spliti=${splitline%%$1*}
+        splitline=${splitline#*$1}
+    done
+}
+
+if [ `id -u` -ne 0 ]; 
+then
+    echo "Fatal: You need to be root to execute this."
+    exit 1
+fi
+
+cd ../helper
+
+read namePref
+
+read count
+for (( i = 0; i <= count; i++ ));
+do
+    eval ns=${namePref}ns$i
+    eval ns$i=$ns
+    ./addNS $ns
+    ./execNS $ns ./enableForward
+done
+
+while read line
+do
+    if [ "s$line" = "s" ]; 
+    then
+        break
+    fi
+
+    split " " "$line" i j prefix
+
+    if [ $i -gt $j ];
+    then
+        $((i += j, j = i - j, i -= j))
+    fi
+
+    eval veth$i$j=${namePref}veth${i}-$j
+    eval veth$j$i=${namePref}veth${j}-$i
+    eval prefix$i$j=$prefix
+    eval prefix$j$i=$prefix
+    
+    eval ./connectNS \$ns$i \$ns$j \$veth$i$j \$veth$j$i \$prefix$i$j
+done
+
+while read line
+do
+    if [ "s$line" = "s" ]; 
+    then
+        break
+    fi
+
+    split " " "$line" i target j
+
+    suffix=$((i < j ? 2 : 1))
+
+    eval ./execNS \$ns$i ./setGRoute $target \$veth$i$j \$prefix$i$j.$suffix
+done

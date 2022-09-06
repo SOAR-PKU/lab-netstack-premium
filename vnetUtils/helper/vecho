@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#echo "$VNET_VERBOSE"
+if [ "s$VNET_VERBOSE" = "s1" ]; then
+    echo -e "$*"
+fi

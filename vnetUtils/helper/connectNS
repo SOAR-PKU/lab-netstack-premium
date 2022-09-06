@@ -1,0 +1,10 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+./addVethPair $3 $4
+./setNS $3 $1
+./setNS $4 $2
+./execNS $1 ./giveAddr $3 $5.1/24
+./execNS $2 ./giveAddr $4 $5.2/24
+./execNS $1 ./setRoute $5.0/24 $3
+./execNS $2 ./setRoute $5.0/24 $4

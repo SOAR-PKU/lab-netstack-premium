@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$#" != 0 ]; then
+    echo "mperf-kill 1.1.0098-Release"
+fi
+
+if ps -ef | grep mperf-udp | grep -v grep | grep -v kill; then
+    ps -ef | grep mperf | grep -v grep | grep -v kill | awk '{print $2}' | xargs kill -15
+fi
+
+if ps -ef | grep mperf | grep -v grep | grep -v kill; then
+    ps -ef | grep mperf | grep -v grep | grep -v kill | awk '{print $2}' | xargs kill -2
+fi
+

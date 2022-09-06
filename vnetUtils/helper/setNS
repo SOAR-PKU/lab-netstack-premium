@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./vecho "\e[1;34m$0 $*\e[0m"
+if [[ "s${2: -3:3}" != "sns0" ]]; 
+then
+    ./vdo ip link set $1 netns $2
+else 
+    ./vdo ip link set $1 netns $$
+fi
